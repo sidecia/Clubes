@@ -4,6 +4,11 @@
     <string name="app_name">Clubes</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_splash_inicio">SplashInicio</string>
+    <string name="tituloActividades">Actividades</string>
+    <string name="tituloNoticias">Noticias</string>
+    <string name="title3">Calendario</string>
+    <string name="title4">Quejas</string>
+    <string name="title5">Mi Perfil</string>
+    <string name="title_activity_collection_demo">CollectionDemoActivity</string>
 
 </resources>
