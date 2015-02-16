@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * jrodolfovillasenor
  */
 public class contenido extends Fragment {
 
