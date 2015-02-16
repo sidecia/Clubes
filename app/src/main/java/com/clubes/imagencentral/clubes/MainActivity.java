@@ -78,7 +78,7 @@ public class MainActivity extends ActionBarActivity {
         public Fragment getItem(int i) {
 
             /***/
-            // TODO //
+            // TODO
             // aqui hay que poner un switch
             // para crear un fragmento del tipo deseado
             // segun el indice recibido
