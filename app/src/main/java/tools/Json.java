@@ -33,6 +33,7 @@ public class Json {
         InputStream is = null;
         String result = "";
         JSONObject jsonObject = null;
+
         // HTTP
         try {
             HttpClient httpclient = new DefaultHttpClient(); // for port 80 requests!
