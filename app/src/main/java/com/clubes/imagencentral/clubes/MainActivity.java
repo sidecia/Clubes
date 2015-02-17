@@ -15,6 +15,9 @@ import com.astuetz.PagerSlidingTabStrip;
 public class MainActivity extends ActionBarActivity {
 
 
+    protected int CLUB=1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,18 +87,35 @@ public class MainActivity extends ActionBarActivity {
             // segun el indice recibido
             /***/
 
-            // crear el nuevo fragmento
-            Fragment fragmento = new contenido();
+            switch(i) {
 
-            // crear los argumentos para el contenido
-            Bundle argumentos = new Bundle();
-            argumentos.putString(contenido.ARG_SECTION_NAME, getPageTitle(i).toString());
+                case 1: {
 
-            // pasarle los argumentos al nuevo fragmento
-            fragmento.setArguments(argumentos);
+                    return null;
 
-            // devolver el fragmento creado
-            return fragmento;
+                }
+
+                case 0: case 2: case 3: {
+
+                    // crear el nuevo fragmento
+                    Fragment fragmento = new contenido();
+
+                    // crear los argumentos para el contenido
+                    Bundle argumentos = new Bundle();
+                    argumentos.putString(contenido.ARG_SECTION_NAME, getPageTitle(i).toString());
+
+                    // pasarle los argumentos al nuevo fragmento
+                    fragmento.setArguments(argumentos);
+
+                    // devolver el fragmento creado
+                    return fragmento;
+
+                }
+
+                default:
+                    return null;
+
+            } // termina switch
 
         }
 
