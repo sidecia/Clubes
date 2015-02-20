@@ -1,13 +1,13 @@
 package com.clubes.imagencentral.clubes;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +25,7 @@ public class ListadoNoticias extends ListFragment {
     // constructor
     public ListadoNoticias() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -40,7 +41,30 @@ public class ListadoNoticias extends ListFragment {
     }
 
 
-    /**funcion que trae los datos de internet**/
+    /**para cambiar a la actividad NoticiaDetalle al hacer click**/
+    @Override
+    public void onListItemClick(ListView list, View view, int position, long id) {
+        super.onListItemClick(list, view, position, id);
+
+        JSONAdaptadorNoticias adaptador=(JSONAdaptadorNoticias) list.getAdapter();
+        try {
+
+            // ir a la siguiente actividad
+            Intent intent=new Intent(getActivity(), NoticiaDetalle.class);
+            intent.putExtra("club", String.valueOf(club));
+            intent.putExtra("idcontenido", adaptador.getItem(position).getString("idreal"));
+            startActivity(intent);
+
+        } catch (JSONException e) {
+            // TODO en caso de que falle el json
+            e.printStackTrace();
+        }
+
+    }
+    /***/
+
+
+    /**funcion que trae los datos de la API**/
     public void traerDatos(int club, int tipoContenido) {
         BuscaDatos buscador=new BuscaDatos();
         buscador.execute(club, tipoContenido);
@@ -51,7 +75,7 @@ public class ListadoNoticias extends ListFragment {
         // traer los datos y enviarlos a onPostExecute
         protected JSONArray doInBackground(Integer... params) {
 
-            JSONArray items;
+            JSONArray items=new JSONArray();
 
             //armar la url
             String url="http://192.168.0.103:80/mobile/club/api/content/listContent?club=" + params[0] + "&type=" + params[1];
@@ -62,8 +86,26 @@ public class ListadoNoticias extends ListFragment {
 
             try {
 
-                //extraer los items
-                 items=datos.getJSONObject("response").getJSONArray("data");
+                // atrapar el codigo de la respuesta
+                String code=datos.getJSONObject("meta").getString("code");
+
+                // si trajo resultados correctamente
+                if(code.equals("200")) {
+
+                    //extraer los items
+                    items=datos.getJSONObject("response").getJSONArray("data");
+
+                // en caso de que haya habido un error
+                } else {
+
+                    // mandar el mensaje de error
+                    JSONObject error=new JSONObject();
+                    error.put("idreal", "0");
+                    error.put("title", "error");
+                    error.put("intro", datos.getJSONObject("meta").getString("detail"));
+                    items.put(error);
+
+                }
 
             } catch(JSONException e) {
                 // TODO enviar mensaje de falla en la traduccion del JSON
@@ -76,15 +118,7 @@ public class ListadoNoticias extends ListFragment {
         // enviar los datos a la vista principal
         protected void onPostExecute(JSONArray items) {
 
-            // las claves para el adaptador
-            String[] from={"title"};
-            int[] to={R.id.titulo_item_noticias};
-
-            // crear el adaptador
-            //ListAdapter adaptadorListado=new JSONArrayAdapter(getActivity(), items, R.layout.item_listado_noticias, from, to, "idreal");
-            //setListAdapter(adaptadorListado);
-
-            JSONAdapter adaptador=new JSONAdapter(getActivity(), items);
+            JSONAdaptadorNoticias adaptador=new JSONAdaptadorNoticias(getActivity(), items);
             setListAdapter(adaptador);
 
         }
