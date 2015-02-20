@@ -10,7 +10,7 @@ import com.clubes.imagencentral.clubes.adapters.JSONAdaptadorGaleriaPantallaComp
 import org.json.JSONArray;
 import org.json.JSONException;
 
-
+/**/
 public class GaleriaCompleta extends FragmentActivity {
 
     JSONArray items;
