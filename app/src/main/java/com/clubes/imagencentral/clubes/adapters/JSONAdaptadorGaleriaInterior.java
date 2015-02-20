@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import com.clubes.imagencentral.clubes.tools.ImagenReal;
 
 /**
- * Created by julio v on 19/02/2015.
+ * Created by julio v on 19/02/2015. *
  */
 public class JSONAdaptadorGaleriaInterior extends BaseAdapter implements ListAdapter {
 
