@@ -1,4 +1,4 @@
-package com.clubes.imagencentral.clubes;
+package com.clubes.imagencentral.clubes.adapters;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 
+import com.clubes.imagencentral.clubes.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -14,7 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tools.ImagenReal;
+import com.clubes.imagencentral.clubes.tools.ImagenReal;
 
 /**
  * Created by julio v on 19/02/2015.
@@ -24,7 +25,7 @@ public class JSONAdaptadorGaleriaInterior extends BaseAdapter implements ListAda
     final Activity activity;
     final JSONArray jsonArray;
 
-    JSONAdaptadorGaleriaInterior(Activity activity, JSONArray jsonArray) {
+    public JSONAdaptadorGaleriaInterior(Activity activity, JSONArray jsonArray) {
         assert activity!=null;
         assert jsonArray!=null;
 

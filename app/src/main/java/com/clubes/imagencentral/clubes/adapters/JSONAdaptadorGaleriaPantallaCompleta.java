@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.clubes.imagencentral.clubes.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -45,16 +46,24 @@ public class JSONAdaptadorGaleriaPantallaCompleta extends PagerAdapter {
 
     public Object instantiateItem(ViewGroup container, int position) {
 
-        // atrapar la vista
+        // atrapar los elementos de la vista
+        TextView tituloItemGaleriaPantallaCompleta;
         ImageView imagenItemGaleriaPantallaCompleta;
+        TextView pieItemGaleriaPantallaCompleta;
+
+        // inflar los elementos de la vista
         inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView=inflater.inflate(R.layout.item_galeria_pantalla_completa, container, false);
+        tituloItemGaleriaPantallaCompleta=(TextView) itemView.findViewById(R.id.titulo_item_galeria_pantalla_completa);
         imagenItemGaleriaPantallaCompleta=(ImageView) itemView.findViewById(R.id.imagen_item_galeria_pantalla_completa);
+        pieItemGaleriaPantallaCompleta=(TextView) itemView.findViewById(R.id.pie_item_galeria_pantalla_completa);
 
         // poner la imagen en la vista
         try {
 
-            String imagenReal = new ImagenReal().cambiaImagen(items.getJSONObject(position).getString("photo"), "normal");
+            tituloItemGaleriaPantallaCompleta.setText(items.getJSONObject(position).getString("name"));
+            pieItemGaleriaPantallaCompleta.setText(items.getJSONObject(position).getString("foot"));
+            String imagenReal=new ImagenReal().cambiaImagen(items.getJSONObject(position).getString("photo"), "normal");
             imageLoader.displayImage("http://192.168.0.103/mobile/club/recursos/img/"+imagenReal, imagenItemGaleriaPantallaCompleta, opciones);
 
             ((ViewPager) container).addView(itemView);
