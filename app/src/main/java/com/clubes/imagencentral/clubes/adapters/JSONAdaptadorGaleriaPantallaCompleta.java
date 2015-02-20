@@ -18,7 +18,7 @@ import org.json.JSONException;
 import com.clubes.imagencentral.clubes.tools.ImagenReal;
 
 /**
- * Created by julio v on 20/02/2015.
+ * Created by julio v on 20/02/2015. ******
  */
 public class JSONAdaptadorGaleriaPantallaCompleta extends PagerAdapter {
 
