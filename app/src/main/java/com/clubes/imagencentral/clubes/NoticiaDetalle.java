@@ -1,6 +1,7 @@
 package com.clubes.imagencentral.clubes;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -123,8 +125,8 @@ public class NoticiaDetalle extends ActionBarActivity {
                 // atrapar la galeria
                 GridView galeriaNoticiaDetalle=(GridView) findViewById(R.id.galeria_noticia_detalle);
 
-                // si si trae galeria
-                if(detalle.has("gallery")) {
+                // si trae galeria
+                if(detalle.has("gallery") && detalle.getJSONArray("gallery")!=null) {
 
                     // atrapar la galeria como string
                     // para mandarla a la galeria de pantalla completa
@@ -147,9 +149,33 @@ public class NoticiaDetalle extends ActionBarActivity {
                         }
                     });
 
-                //si no trae galeria, esconderla
+                //si NO trae galeria, esconderla
                 } else {
                     galeriaNoticiaDetalle.setVisibility(View.GONE);
+                }
+
+                // atrapar el boton de video
+                final ImageButton videoNoticiaDetalle=(ImageButton) findViewById(R.id.video_noticia_detalle);
+
+                // si trae video
+                if(detalle.has("video") && detalle.get("video")!=null && detalle.getString("video")!="null") {
+
+                    // ponerle tag al boton de video
+                    videoNoticiaDetalle.setTag(detalle.getString("video"));
+
+                    // abrir video al hacer click
+                    videoNoticiaDetalle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.youtube_url)+videoNoticiaDetalle.getTag()));
+                            intent.putExtra("force_fullscreen",true);
+                            startActivity(intent);
+                        }
+                    });
+
+                // si NO trae video, esconder el boton
+                } else {
+                    videoNoticiaDetalle.setVisibility(View.GONE);
                 }
 
             } catch (JSONException e) {
@@ -163,7 +189,7 @@ public class NoticiaDetalle extends ActionBarActivity {
     /***/
 
 
-    /**para el menu de la actividad**/
+    /**para el menu de la actividad**
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
