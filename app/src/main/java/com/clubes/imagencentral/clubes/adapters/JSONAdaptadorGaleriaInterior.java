@@ -1,6 +1,8 @@
 package com.clubes.imagencentral.clubes.adapters;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,6 +26,7 @@ public class JSONAdaptadorGaleriaInterior extends BaseAdapter implements ListAda
 
     final Activity activity;
     final JSONArray jsonArray;
+    final String base_url;
 
     public JSONAdaptadorGaleriaInterior(Activity activity, JSONArray jsonArray) {
         assert activity!=null;
@@ -31,6 +34,7 @@ public class JSONAdaptadorGaleriaInterior extends BaseAdapter implements ListAda
 
         this.jsonArray=jsonArray;
         this.activity=activity;
+        this.base_url=activity.getString(R.string.base_url);
     }
 
 
@@ -98,7 +102,7 @@ public class JSONAdaptadorGaleriaInterior extends BaseAdapter implements ListAda
 
             // poner los datos en el viewHolder
             String imagenReal=new ImagenReal().cambiaImagen(item.get("photo").toString(), "mini");
-            imageLoader.displayImage("http://192.168.0.103/mobile/club/recursos/img/"+imagenReal, viewHolder.imagenItemGaleria, opciones);
+            imageLoader.displayImage(base_url+"recursos/img/"+imagenReal, viewHolder.imagenItemGaleria, opciones);
 
         } catch (JSONException e) {
             //TODO excepcion de json

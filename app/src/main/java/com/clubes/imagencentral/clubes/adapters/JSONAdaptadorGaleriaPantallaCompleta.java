@@ -25,6 +25,7 @@ public class JSONAdaptadorGaleriaPantallaCompleta extends PagerAdapter {
     private Context context;
     private JSONArray items;
     LayoutInflater inflater;
+    final String base_url;
 
 
     /***/
@@ -37,6 +38,7 @@ public class JSONAdaptadorGaleriaPantallaCompleta extends PagerAdapter {
     public JSONAdaptadorGaleriaPantallaCompleta(Context context, JSONArray items) {
         this.context=context;
         this.items=items;
+        this.base_url=context.getString(R.string.base_url);
     }
 
     public int getCount() {
@@ -62,9 +64,9 @@ public class JSONAdaptadorGaleriaPantallaCompleta extends PagerAdapter {
             tituloItemGaleriaPantallaCompleta.setText(items.getJSONObject(position).getString("name"));
             pieItemGaleriaPantallaCompleta.setText(items.getJSONObject(position).getString("foot"));
             String imagenReal=new ImagenReal().cambiaImagen(items.getJSONObject(position).getString("photo"), "normal");
-            imageLoader.displayImage("http://192.168.0.103/mobile/club/recursos/img/"+imagenReal, imagenItemGaleriaPantallaCompleta, opciones);
+            imageLoader.displayImage(base_url+"recursos/img/"+imagenReal, imagenItemGaleriaPantallaCompleta, opciones);
 
-            ((ViewPager) container).addView(itemView);
+            container.addView(itemView);
 
         } catch(JSONException e) {
             // TODO en caso de que falle el json
