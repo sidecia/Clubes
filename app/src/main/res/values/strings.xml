@@ -1,14 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Clubes</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_search">Buscar</string>
     <string name="tituloActividades">Actividades</string>
     <string name="tituloNoticias">Noticias</string>
     <string name="title3">Calendario</string>
     <string name="title4">Quejas</string>
     <string name="title5">Mi Perfil</string>
-    <string name="title_activity_collection_demo">CollectionDemoActivity</string>
+    <string name="title_activity_splash_inicio">CollectionDemoActivity</string>
+    <string name="url_api">http://192.168.0.103/mobile/club/api/content/</string>
+    <string name="url_img">http://192.168.0.103/mobile/club/recursos/img/</string>
+    <string name="url_video">https://www.youtube.com/watch?v=</string>
+    <string name="url_thumbnailvideo">http://img.youtube.com/vi/</string>
+    <string name="url_thumbnailvideo0">/0.jpg</string>
+    <string name="url_thumbnailvideo1">/1.jpg</string>
+    <string name="url_thumbnailvideo2">/2.jpg</string>
+    <string name="url_thumbnailvideo3">/3.jpg</string>
+
+
+    <!-- Actividades -->
+    <string name="tvActividades">Actividades</string>
+    <string name="tvHorarios">Horarios</string>
+    <string name="ivImagenActividad">Horarios</string>
+    <string name="tvNombreActividad">Horarios</string>
+    <string name="title_activity_actividad_detalle">ActividadDetalleActivity</string>
+    <string name="title_activity_galeria_completa">GaleriaCompleta</string>
+    <string name="title_activity_noticia_detalle"></string>
+
+    <!--Detalle Actividades-->
+    <string name="tvDetalleActividadesDescripcion">Descripción</string>
+    <string name="tvDetalleHorarios">Horarios</string>
+    
+    <!--Horarios-->
+    <string name="tvHorainicioHorario">Hora Inicio</string>
+    <string name="tvHorafinHorario">Hora Fin</string>
+    <string name="tvZonaHorario">Zona</string>
+
+    <!--Fragment Dialog Buscador-->
+    <string name="tituloBuscadorActividades">Buscar Actividades</string>
+    <string name="tituloseparadorFiltros">Filtros</string>
+    <string name="tvEdad">Edad</string>
+    <string name="tvPalabra">Buscar</string>
+    <string name="tvDia">Dia</string>
+    <string name="tvHora">Hora</string>
+    <string name="btnAceptar">Aceptar</string>
+    <string name="btnCancelar">Cancelar</string>
+    <string-array name="diassemana">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miercoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sabado</item>
+        <item>Domingo</item>
+    </string-array>
+
+
+    <!--jrvm-->
+
+    <!--URLs-->
+    <string name="base_url">http://192.168.0.103/mobile/club/</string>
+    <string name="youtube_url">vnd.youtube://</string>
+
+    <!--para el dialog buscador-->
+    <string name="que_quieres">¿Qué quieres encontrar?</string>
+
+    <!--otras cadenas-->
+    <string name="buscador">busca</string>
+    <string name="buscador_hint">escribe aquí</string>
+    <string name="no_hubo_resultados">No se encontraron resultados para esta búsqueda.</string>
+    <string name="error">Ocurrió un error.</string>
 
 </resources>

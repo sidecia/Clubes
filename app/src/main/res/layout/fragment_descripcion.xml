@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:id="@+id/detailContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:weightSum="1">
+        <ProgressBar
+            android:id="@+id/loading_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:visibility="invisible" />
+        <ImageView
+            android:id="@+id/ivDImagenActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/ivImagenActividad"
+        />
+        <TextView
+            android:id="@+id/tvDNombreActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/tvNombreActividad"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDescripcionActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="@string/tvDetalleActividadesDescripcion" />
+        <GridView
+            android:id="@+id/galeria_actividad_descripcion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnWidth="100dp"
+            android:gravity="center"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="5dp"
+            android:drawSelectorOnTop="true"
+            android:stretchMode="columnWidth" >
+        </GridView>
+        <ImageView
+            android:id="@+id/ivVideoActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/ivImagenActividad"
+            />
+    </LinearLayout>
+</ScrollView>

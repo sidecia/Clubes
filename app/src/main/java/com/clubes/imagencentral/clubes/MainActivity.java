@@ -6,53 +6,47 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.clubes.imagencentral.clubes.Fragments.FragmentBuscador;
+import com.clubes.imagencentral.clubes.Fragments.FragmentListadoNoticias;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements FragmentBuscador.interfazBuscador  {
 
 
     // TODO poner una funcion que lea el club de la base de datos
     protected int CLUB=1;
-
+    PagerSlidingTabStrip tabs;
+    ViewPager paginador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /** inicializar UIL **/
+        if(!ImageLoader.getInstance().isInited())
+        {
+            ImageLoaderConfiguration config = new
+                    ImageLoaderConfiguration.Builder(getApplicationContext())
+                    .threadPoolSize(10)
+                    .build();
+            ImageLoader.getInstance().init( config );
+        }
         /***/
-        // paginador
-        ViewPager paginador = (ViewPager) findViewById(R.id.paginador);
-        paginador.setAdapter(new
-                PaginadorAdaptador(getSupportFragmentManager()));
+        /** inicializar paginador y tabs **/
+        paginador = (ViewPager) findViewById(R.id.paginador);
+        paginador.setAdapter(new PaginadorAdaptador(getSupportFragmentManager()));
         // tabs
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(paginador);
         /***/
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     /***/
     // adaptador de fragmentos para el paginador
     public class PaginadorAdaptador extends FragmentPagerAdapter {
@@ -79,6 +73,25 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
+        /**/
+        SparseArray<Fragment> registeredFragments=new SparseArray<Fragment>();
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
+        }
+        /**/
         @Override
         public Fragment getItem(int i) {
 
@@ -88,16 +101,37 @@ public class MainActivity extends ActionBarActivity {
                     Fragment actividades = new Actividades();
                     // crear los argumentos para el contenido
                     Bundle argumentos = new Bundle();
-                    argumentos.putString(contenido.ARG_SECTION_NAME,
-                            getPageTitle(i).toString());
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(CLUB);
+                    String idClub = sb.toString();
+                    argumentos.putString("CLUB",idClub);
+                    argumentos.putString(contenido.ARG_SECTION_NAME,getPageTitle(i).toString());
                     // pasarle los argumentos al nuevo fragmento
                     actividades.setArguments(argumentos);
-
                     // devolver el fragmento creado
                     return actividades;
                 }
+                // para el fragmento NOTICIAS
+                case 1: {
 
-                case 1: case 2: case 3: {
+                    // crear el fragmento
+                    FragmentListadoNoticias listadoNoticias=new FragmentListadoNoticias();
+
+                    // crear los argumentos
+                    Bundle argumentos=new Bundle();
+                    argumentos.putInt("club", CLUB);
+
+                    // para que el fragmento cree su menu
+                    listadoNoticias.setHasOptionsMenu(true);
+
+                    // pasar los argumentos al fragmento
+                    listadoNoticias.setArguments(argumentos);
+
+                    // devolver el listado de las noticias
+                    return listadoNoticias;
+
+                }
+                case 2: case 3: {
 
                     // crear el nuevo fragmento
                     Fragment fragmento = new contenido();
@@ -124,4 +158,14 @@ public class MainActivity extends ActionBarActivity {
 
     }
     /***/
+    /** sobreescribir el metodo de interfazBuscador **/
+    public void traeCadena(String cadena) {
+
+        PaginadorAdaptador adaptador=(PaginadorAdaptador) paginador.getAdapter();
+        FragmentListadoNoticias listadoNoticias=(FragmentListadoNoticias) adaptador.getRegisteredFragment(paginador.getCurrentItem());
+        listadoNoticias.actualizaNoticias(cadena);
+
+    }
+    /***/
+
 }

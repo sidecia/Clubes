@@ -1,0 +1,56 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etPalabraBuscar"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView"
+            android:hint="@string/tvPalabra"
+            android:drawableLeft="@drawable/ic_action_search"/>
+
+
+        <Spinner
+            android:id="@+id/spinnerEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/tvEdad" />
+
+        <Spinner
+            android:id="@+id/spinnerDia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/tvDia" />
+
+        <Spinner
+            android:id="@+id/spinnerHora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/tvHora" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnAceptar"
+                android:id="@+id/btnAceptar" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnCancelar"
+                android:id="@+id/btnCancelar" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
