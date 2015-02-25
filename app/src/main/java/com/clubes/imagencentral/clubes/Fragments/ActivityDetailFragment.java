@@ -11,11 +11,15 @@ import android.widget.Button;
 
 import com.clubes.imagencentral.clubes.R;
 import com.clubes.imagencentral.clubes.data.DataActividades;
+import com.clubes.imagencentral.clubes.data.DataImagenesGaleria;
 import com.clubes.imagencentral.clubes.tools.ImagenReal;
 import com.clubes.imagencentral.clubes.tools.Json;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Marco on 18/02/2015.
@@ -25,12 +29,15 @@ public class ActivityDetailFragment extends Fragment {
     String idreal_actividad;
     String idclub;
     Bundle b;
+    public List<DataImagenesGaleria> imagenes = new ArrayList<DataImagenesGaleria>();
+
     //public List<DataActividades> dataactividades = new ArrayList<DataActividades>();
     public ActivityDetailFragment(){
 
     }
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         Bundle argumentos = getArguments();
         idreal_actividad=argumentos.getString("idactividad");
         idclub=argumentos.getString("CLUB");
@@ -45,11 +52,7 @@ public class ActivityDetailFragment extends Fragment {
         btnDescripcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentDescripcion fr = new FragmentDescripcion();
-                fr.setArguments(b);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_descripcion, fr)
-                        .commit();
+                CargaFragment(b, "Descripcion");
             }
         });
         Button btnDetalleHorarios = (Button) vista.findViewById(R.id.btnDetalleHorarios);
@@ -58,11 +61,7 @@ public class ActivityDetailFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                FragmentHorariosActividad fr = new FragmentHorariosActividad();
-                fr.setArguments(b);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_descripcion,fr)
-                        .commit();
+                CargaFragment(b, "Horarios");
             }
         });
         return vista;
@@ -96,6 +95,7 @@ public class ActivityDetailFragment extends Fragment {
                 ImagenReal imagenapi= new ImagenReal();
                 JSONObject array = actividadesjson.getJSONObject("response");
                 DataActividades dataactividades;
+                //Obtener información solo de la actividad
                 dataactividades = new DataActividades
                         (       idreal_actividad,
                                 array.getString("name"),
@@ -105,11 +105,11 @@ public class ActivityDetailFragment extends Fragment {
                         );
                 b = dataactividades.toBundle();
                 b.putString("CLUB",idclub);
-                FragmentDescripcion fr = new FragmentDescripcion();
-                fr.setArguments(b);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_descripcion, fr)
-                        .commit();
+                //Pasamos el array para que en el adaptador generemos la galleria
+                b.putString("Gallery",actividadesjson.getJSONObject("response").toString());
+                //Pasamos el Id del video de la actividad
+                b.putString("Video",array.getString("video"));
+                CargaFragment(b, "Descripcion");
 
             }
             catch (JSONException e)
@@ -120,6 +120,21 @@ public class ActivityDetailFragment extends Fragment {
             }
         }
 
+    }
+    public void CargaFragment(Bundle args,String cual){
+        if(cual.equals("Descripcion")) {
+            FragmentDescripcion fr = new FragmentDescripcion();
+            fr.setArguments(args);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_descripcion, fr)
+                    .commit();
+        }else if(cual.equals("Horarios")){
+            FragmentHorariosActividad fr = new FragmentHorariosActividad();
+            fr.setArguments(args);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_descripcion,fr)
+                    .commit();
+        }
 
     }
 
