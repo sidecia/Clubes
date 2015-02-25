@@ -3,7 +3,7 @@ package com.clubes.imagencentral.clubes.data;
 import android.os.Bundle;
 
 /**
- * Created by Lau on 20/02/2015.
+ * Created by Marco on 20/02/2015.
  */
 public class DataHorarioActividad {
     //	constants for field references

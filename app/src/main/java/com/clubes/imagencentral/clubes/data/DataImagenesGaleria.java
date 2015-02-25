@@ -3,7 +3,7 @@ package com.clubes.imagencentral.clubes.data;
 import android.os.Bundle;
 
 /**
- * Created by Lau on 23/02/2015.
+ * Created by Marco on 23/02/2015.
  */
 public class DataImagenesGaleria {
     //	constants for field references

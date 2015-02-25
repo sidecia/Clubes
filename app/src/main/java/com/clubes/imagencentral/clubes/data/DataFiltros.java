@@ -1,7 +1,7 @@
 package com.clubes.imagencentral.clubes.data;
 
 /**
- * Created by Lau on 24/02/2015.
+ * Created by Marco on 24/02/2015.
  */
 public class DataFiltros {
     //	constants for field references
