@@ -79,4 +79,9 @@ public class JSONAdaptadorGaleriaPantallaCompleta extends PagerAdapter {
         return view==object;
     }
 
+    @Override
+    public void destroyItem(View container, int position, Object object) {
+        ((ViewPager) container).removeView((View) object);
+    }
+
 }
