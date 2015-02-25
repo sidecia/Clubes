@@ -10,13 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.clubes.imagencentral.clubes.R;
+import com.clubes.imagencentral.clubes.tools.ImagenReal;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import com.clubes.imagencentral.clubes.tools.ImagenReal;
 
 /**
  * Created by julio v on 20/02/2015.
@@ -57,7 +56,6 @@ public class JSONAdaptadorGaleriaPantallaCompleta extends PagerAdapter {
         tituloItemGaleriaPantallaCompleta=(TextView) itemView.findViewById(R.id.titulo_item_galeria_pantalla_completa);
         imagenItemGaleriaPantallaCompleta=(ImageView) itemView.findViewById(R.id.imagen_item_galeria_pantalla_completa);
         pieItemGaleriaPantallaCompleta=(TextView) itemView.findViewById(R.id.pie_item_galeria_pantalla_completa);
-
         // poner la imagen en la vista
         try {
 
