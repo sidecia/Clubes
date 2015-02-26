@@ -204,7 +204,6 @@ public class FragmentListadoNoticias extends ListFragment implements AbsListView
 
                     // en caso de que haya habido un error
                 } else {
-
                     // mandar el mensaje de error
                     JSONObject error=new JSONObject();
                     error.put("idreal", "0");
@@ -212,7 +211,6 @@ public class FragmentListadoNoticias extends ListFragment implements AbsListView
                     error.put("intro", datos.getJSONObject("meta").getString("detail"));
                     error.put("photo", "1/sto54e77ec5c5266.jpg");
                     items.put(error);
-
                 }
 
             } catch(JSONException e) {
