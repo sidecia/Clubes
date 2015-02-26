@@ -126,7 +126,7 @@ public class NoticiaDetalle extends ActionBarActivity {
                 GridView galeriaNoticiaDetalle=(GridView) findViewById(R.id.galeria_noticia_detalle);
 
                 // si trae galeria
-                if(detalle.has("gallery") && detalle.getJSONArray("gallery")!=null) {
+                if(detalle.has("gallery") && !detalle.isNull("gallery")) {
 
                     // atrapar la galeria como string
                     // para mandarla a la galeria de pantalla completa
@@ -158,7 +158,7 @@ public class NoticiaDetalle extends ActionBarActivity {
                 final ImageButton videoNoticiaDetalle=(ImageButton) findViewById(R.id.video_noticia_detalle);
 
                 // si trae video
-                if(detalle.has("video") && detalle.get("video")!=null && detalle.getString("video")!="null") {
+                if(detalle.has("video") && !detalle.isNull("video")) {
 
                     // ponerle tag al boton de video
                     videoNoticiaDetalle.setTag(detalle.getString("video"));
@@ -185,31 +185,6 @@ public class NoticiaDetalle extends ActionBarActivity {
 
         }
 
-    }
-    /***/
-
-
-    /**para el menu de la actividad**
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_noticia_detalle, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
     /***/
 }

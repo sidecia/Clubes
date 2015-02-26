@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.clubes.imagencentral.clubes.R;
@@ -28,18 +29,23 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**jrvm**/
-public class FragmentListadoNoticias extends ListFragment {
+public class FragmentListadoNoticias extends ListFragment implements AbsListView.OnScrollListener {
 
+    // adaptador
     JSONAdaptadorNoticias adaptador;
 
-    // para indicar que vamos a buscar noticias
-    protected String tipoContenido="0";
+    // las variables para la busqueda
     protected String club;
+    protected String type="0";           // 0=noticias
+    protected String search="";          // no hay busqueda por default
+    protected String page="1";           // traer la primera pagina por default
+    protected int umbral=0;              // controla cuantos items faltan para cargar mas items
+    protected boolean traerMas=true;     // dice si hay que traer mas items
+    protected int NUMERO_ITEMS=5;       // dice cuantos items deben cargarse por pagina
 
     // constructor
     public FragmentListadoNoticias() {
         // Required empty public constructor
-
     }
 
     @Override
@@ -50,9 +56,43 @@ public class FragmentListadoNoticias extends ListFragment {
         club=Integer.toString(getArguments().getInt("club"));
 
         // traer los datos
-        traerDatos(club, tipoContenido, null);
+        traerDatos(club, type, search, page);
 
     }
+
+
+    /** para el scroll listener **/
+    @Override
+     public void onActivityCreated (Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        getListView().setOnScrollListener(this);
+    }
+
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) { }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        int newPage=Integer.parseInt(page);
+
+        if (scrollState==SCROLL_STATE_IDLE) {
+            if (view.getLastVisiblePosition()>=view.getCount()-1-umbral) {
+
+                // traer mas datos en caso necesario
+                if(traerMas) {
+                    newPage++;
+                    page=String.valueOf(newPage);
+                    traerMasDatos();
+                }
+
+            }
+        }
+
+    }
+
+    public void traerMasDatos() {
+        traerDatos(club, type, search, page);
+    }
+    /***/
 
 
     /** para el menu de la actionbar **/
@@ -109,20 +149,23 @@ public class FragmentListadoNoticias extends ListFragment {
 
 
     /** funcion que trae los datos de la API **/
-    public void traerDatos(String club, String tipoContenido, String cadena) {
+    public void traerDatos(String club, String type, String search, String page) {
         BuscaDatos buscador=new BuscaDatos();
-        buscador.execute(club, tipoContenido, cadena);
+        buscador.execute(club, type, search, page);
     }
 
     private class BuscaDatos extends AsyncTask<String, Void, JSONArray> {
 
+        String pageIndexer;
+
         // traer los datos y enviarlos a onPostExecute
         protected JSONArray doInBackground(String... params) {
 
+            pageIndexer=params[3];
             JSONArray items=new JSONArray();
 
             //armar la url
-            String url=getActivity().getString(R.string.base_url) + "api/content/listContent?club=" + params[0] + "&type=" + params[1];
+            String url=getActivity().getString(R.string.base_url)+"api/content/listContent?club="+params[0]+"&type="+params[1];
             if(params[2]!=null && !params[2].equals("")) {
                 try {
                     url+="&search="+URLEncoder.encode(params[2], HTTP.UTF_8);
@@ -130,8 +173,9 @@ public class FragmentListadoNoticias extends ListFragment {
                     // TODO en caso de que falle la codificacion
                 }
             }
+            url+="&page="+page;
 
-            // traer loa datos
+            // traer los datos
             JSONObject datos=Json.getJson(url, 2, null);
 
             try {
@@ -182,9 +226,35 @@ public class FragmentListadoNoticias extends ListFragment {
         // enviar los datos a la vista principal
         protected void onPostExecute(JSONArray items) {
 
-            Log.i("items", items.toString());
-            adaptador=new JSONAdaptadorNoticias(getActivity(), items);
-            setListAdapter(adaptador);
+            // checar si se deben buscar mas items despues
+            if(items.length()<NUMERO_ITEMS) {
+                traerMas=false;
+            }
+
+            // si es la primera pagina de la busqueda
+            if(pageIndexer.equals("1")) {
+
+                Log.i("items", items.toString());
+                adaptador=new JSONAdaptadorNoticias(getActivity(), items);
+                setListAdapter(adaptador);
+
+            // si hay que agregar datos al adaptador
+            } else {
+
+                try {
+                    // checar que no haya sido un mensaje de error
+                    if (!items.getJSONObject(0).getString("idreal").equals("0")) {
+                        // agregar los datos al adaptador
+                        for (int i = 0; i < items.length(); i++) {
+                            adaptador.jsonArray.put(items.getJSONObject(i));
+                            adaptador.notifyDataSetChanged();
+                        }
+                    }
+                } catch(JSONException e) {
+                    // TODO en caso de que falle el JSON
+                }
+
+            }
 
         }
 
@@ -194,7 +264,13 @@ public class FragmentListadoNoticias extends ListFragment {
 
     /** para actualizar la informacion con la cadena recibida del buscador **/
     public void actualizaNoticias(String cadena) {
-        traerDatos(club, tipoContenido, cadena);
+
+        // reiniciar las varibles de busqueda
+        search=cadena;
+        page="1";
+        traerMas=true;
+        // traer mas datos
+        traerDatos(club, type, search, page);
     }
     /***/
 
