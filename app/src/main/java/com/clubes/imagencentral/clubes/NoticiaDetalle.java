@@ -65,7 +65,7 @@ public class NoticiaDetalle extends ActionBarActivity {
             JSONObject detalle;
 
             // armar la url
-            String url="http://192.168.0.103:80/mobile/club/api/content/getContent?club="+params[0]+"&cid="+params[1]+"";
+            String url=getString(R.string.base_url)+"api/content/getContent?club="+params[0]+"&cid="+params[1]+"";
 
             // traer los datos de la API como JSONObject
             Json json=new Json();
@@ -117,7 +117,7 @@ public class NoticiaDetalle extends ActionBarActivity {
                 // poner la imagen
                 ImageView imagenNoticiaDetalle=(ImageView) findViewById(R.id.imagen_detalle_noticia);
                 String imagenReal=new ImagenReal().cambiaImagen(detalle.get("photo").toString(), "normal");
-                imageLoader.displayImage("http://192.168.0.103/mobile/club/recursos/img/"+imagenReal, imagenNoticiaDetalle, opciones);
+                imageLoader.displayImage(getString(R.string.base_url)+"recursos/img/"+imagenReal, imagenNoticiaDetalle, opciones);
 
                 // poner el titulo a la actividad
                 setTitle(detalle.getString("title"));
