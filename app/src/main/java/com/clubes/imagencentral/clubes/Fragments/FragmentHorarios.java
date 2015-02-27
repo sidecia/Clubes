@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class FragmentHorarios extends ListFragment implements AbsListView.OnScrollListener {
     public List<DataHorarios> datahorarios = new ArrayList<DataHorarios>();
+    private ArrayList<String> encabezadosdia = new ArrayList<String>();
     String idclub;
     String search;
     String ageRange;
@@ -95,16 +96,19 @@ public class FragmentHorarios extends ListFragment implements AbsListView.OnScro
                         JSONObject object = array.getJSONObject(i);
                         String label = object.getString("label");
                         JSONArray items = object.getJSONArray("hours");
-                        datahorarios.add(new DataHorarios(
-                                "",
-                                label,
-                                "",
-                                "",
-                                "",
-                                "",
-                                "",
-                                true
-                        ));
+                        if (!encabezadosdia.contains(label)) {
+                            encabezadosdia.add(label);
+                            datahorarios.add(new DataHorarios(
+                                    "",
+                                    label,
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    true
+                            ));
+                        }
                         for (int j = 0; j < items.length(); j++) {
                             JSONObject objectitem = items.getJSONObject(j);
                             datahorarios.add(new DataHorarios(

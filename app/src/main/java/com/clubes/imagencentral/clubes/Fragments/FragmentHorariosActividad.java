@@ -96,8 +96,6 @@ public class FragmentHorariosActividad  extends ListFragment implements AbsListV
                                     "2"
                             ));
                         }
-
-
                         JSONArray items = object.getJSONArray("days");
                         for (int j = 0; j < items.length(); j++) {
                             JSONObject objectitem = items.getJSONObject(j);
