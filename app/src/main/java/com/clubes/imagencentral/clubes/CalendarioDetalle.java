@@ -3,11 +3,9 @@ package com.clubes.imagencentral.clubes;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -16,14 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.clubes.imagencentral.clubes.adapters.JSONAdaptadorGaleriaInterior;
+import com.clubes.imagencentral.clubes.tools.ImagenReal;
+import com.clubes.imagencentral.clubes.tools.Json;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tools.ImagenReal;
-import tools.Json;
 
 
 public class CalendarioDetalle extends ActionBarActivity {
