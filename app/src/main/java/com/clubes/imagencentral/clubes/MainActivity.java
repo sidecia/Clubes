@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.clubes.imagencentral.clubes.Fragments.FragmentBuscador;
+import com.clubes.imagencentral.clubes.Fragments.FragmentListadoCalendario;
 import com.clubes.imagencentral.clubes.Fragments.FragmentListadoNoticias;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -92,6 +93,7 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
             return registeredFragments.get(position);
         }
         /**/
+
         @Override
         public Fragment getItem(int i) {
 
@@ -116,22 +118,35 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
 
                     // crear el fragmento
                     FragmentListadoNoticias listadoNoticias=new FragmentListadoNoticias();
-
                     // crear los argumentos
                     Bundle argumentos=new Bundle();
                     argumentos.putInt("club", CLUB);
-
                     // para que el fragmento cree su menu
                     listadoNoticias.setHasOptionsMenu(true);
-
                     // pasar los argumentos al fragmento
                     listadoNoticias.setArguments(argumentos);
-
                     // devolver el listado de las noticias
                     return listadoNoticias;
 
                 }
-                case 2: case 3: {
+                // para el fragmento CALENDARIO
+                case 2: {
+
+                    //crear el fragmento
+                    FragmentListadoCalendario listadoCalendario=new FragmentListadoCalendario();
+                    // crear los argumentos
+                    Bundle argumentos=new Bundle();
+                    argumentos.putInt("club", CLUB);
+                    // para que el fragmento cree su menu
+                    listadoCalendario.setHasOptionsMenu(true);
+                    // pasar los argumentos al fragmento
+                    listadoCalendario.setArguments(argumentos);
+                    // devolver el listado del calendario
+                    return listadoCalendario;
+
+                }
+
+                case 3: {
 
                     // crear el nuevo fragmento
                     Fragment fragmento = new contenido();

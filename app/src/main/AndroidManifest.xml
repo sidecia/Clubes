@@ -40,7 +40,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_galeria_completa" >
         </activity>
-
+        <activity
+            android:name=".CalendarioDetalle"
+            android:configChanges="orientation|screenSize"
+            android:label="" >
+        </activity>
     </application>
 
 </manifest>
