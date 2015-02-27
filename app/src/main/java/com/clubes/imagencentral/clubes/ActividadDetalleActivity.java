@@ -1,8 +1,7 @@
 package com.clubes.imagencentral.clubes;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import com.clubes.imagencentral.clubes.Fragments.ActivityDetailFragment;
@@ -37,11 +36,4 @@ public class ActividadDetalleActivity extends ActionBarActivity {
         }
         return true;
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_actividad_detalle, menu);
-        return true;
-    }
-
 }

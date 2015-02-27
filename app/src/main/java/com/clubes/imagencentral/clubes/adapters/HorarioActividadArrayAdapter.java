@@ -27,29 +27,33 @@ public class HorarioActividadArrayAdapter extends ArrayAdapter<DataHorarioActivi
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
         DataHorarioActividad horario = objects.get(position);
+        View view = convertView;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        if(horario.getTipoheader().equals("2")){
-            view = inflater.inflate(R.layout.horarios_listitem_sectionage, null);
-            TextView tvEncabezado = (TextView) view.findViewById(R.id.tvEncabezadoHorarioAge);
-            tvEncabezado.setText(horario.getLabelactividad());
-        }
-        else if(horario.getTipoheader().equals("1")){
-            view = inflater.inflate(R.layout.horarios_listitem_sectiondia, null);
-            TextView tvEncabezado = (TextView) view.findViewById(R.id.tvEncabezadoHorarioDia);
-            tvEncabezado.setText(horario.getLabelactividad());
+        if(horario.getIdactividad().equals(context.getResources().getString(R.string.noitems))){
+            view = inflater.inflate(R.layout.noresults, null);
         }else {
-            view = inflater.inflate(R.layout.horarioactividad_listitem, null);
 
-            TextView tvInicioActividad = (TextView) view.findViewById(R.id.tvInicioActividad);
-            tvInicioActividad.setText(horario.getInicioactividad());
+            if (horario.getTipoheader().equals("2")) {
+                view = inflater.inflate(R.layout.horarios_listitem_sectionage, null);
+                TextView tvEncabezado = (TextView) view.findViewById(R.id.tvEncabezadoHorarioAge);
+                tvEncabezado.setText(horario.getLabelactividad());
+            } else if (horario.getTipoheader().equals("1")) {
+                view = inflater.inflate(R.layout.horarios_listitem_sectiondia, null);
+                TextView tvEncabezado = (TextView) view.findViewById(R.id.tvEncabezadoHorarioDia);
+                tvEncabezado.setText(horario.getLabelactividad());
+            } else {
+                view = inflater.inflate(R.layout.horarioactividad_listitem, null);
 
-            TextView tvFinActividad = (TextView) view.findViewById(R.id.tvFinActividad);
-            tvFinActividad.setText(horario.getFinactividad());
+                TextView tvInicioActividad = (TextView) view.findViewById(R.id.tvInicioActividad);
+                tvInicioActividad.setText(horario.getInicioactividad());
 
-            TextView tvZonaActividad = (TextView) view.findViewById(R.id.tvZonaActividad);
-            tvZonaActividad.setText(horario.getZonaactividad());
+                TextView tvFinActividad = (TextView) view.findViewById(R.id.tvFinActividad);
+                tvFinActividad.setText(horario.getFinactividad());
+
+                TextView tvZonaActividad = (TextView) view.findViewById(R.id.tvZonaActividad);
+                tvZonaActividad.setText(horario.getZonaactividad());
+            }
         }
         return view;
 
