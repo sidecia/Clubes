@@ -14,6 +14,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView"
             android:hint="@string/tvPalabra"
+            android:imeOptions="actionSearch"
+            android:imeActionLabel="Buscar"
             android:drawableLeft="@drawable/ic_action_search"/>
 
 

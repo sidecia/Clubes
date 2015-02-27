@@ -5,21 +5,10 @@
     android:background="?android:attr/activatedBackgroundIndicator"
     android:paddingBottom="10dp"
     android:orientation="horizontal">
-
-    <ProgressBar
-        android:id="@+id/loading_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:visibility="invisible"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/ivActividad"
-        android:layout_alignStart="@+id/ivActividad" />
-
     <ImageView
         android:id="@+id/ivActividad"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/ivImagenActividad"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
