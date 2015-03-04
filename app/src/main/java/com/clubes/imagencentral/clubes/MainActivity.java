@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.clubes.imagencentral.clubes.Fragments.FragmentBuscador;
+import com.clubes.imagencentral.clubes.Fragments.FragmentClubMain;
 import com.clubes.imagencentral.clubes.Fragments.FragmentListadoCalendario;
 import com.clubes.imagencentral.clubes.Fragments.FragmentListadoNoticias;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -58,7 +59,7 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -69,6 +70,7 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
                 case 1: return "NOTICIAS";
                 case 2: return "CALENDARIO";
                 case 3: return "QUEJAS";
+                case 4: return "CLUB";
                 default: return "";
             }
 
@@ -161,6 +163,22 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
 
                     // devolver el fragmento creado
                     return fragmento;
+
+                }
+                case 4: {
+
+                    Fragment mainclub = new FragmentClubMain();
+                    // crear los argumentos para el contenido
+                    Bundle argumentos = new Bundle();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(CLUB);
+                    String idClub = sb.toString();
+                    argumentos.putString("CLUB", idClub);
+                    argumentos.putString(contenido.ARG_SECTION_NAME,getPageTitle(i).toString());
+                    // pasarle los argumentos al nuevo fragmento
+                    mainclub.setArguments(argumentos);
+                    // devolver el fragmento creado
+                    return mainclub;
 
                 }
 
