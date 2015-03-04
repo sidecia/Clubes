@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/etPalabraBuscar"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textView"
+            android:layout_toRightOf="@+id/fecha_listado_calendario"
             android:hint="@string/tvPalabra"
             android:imeOptions="actionSearch"
             android:imeActionLabel="Buscar"

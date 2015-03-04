@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Clubes</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -21,7 +22,6 @@
     <string name="tvNoresults">No hay nada que mostrar</string>
     <string name="noitems">Noitems</string>
 
-
     <!-- Actividades -->
     <string name="tvActividades">Actividades</string>
     <string name="tvHorarios">Horarios</string>
@@ -31,16 +31,16 @@
     <string name="title_activity_galeria_completa">GaleriaCompleta</string>
     <string name="title_activity_noticia_detalle"></string>
 
-    <!--Detalle Actividades-->
+    <!-- Detalle Actividades -->
     <string name="tvDetalleActividadesDescripcion">Descripción</string>
     <string name="tvDetalleHorarios">Horarios</string>
-    
-    <!--Horarios-->
+
+    <!-- Horarios -->
     <string name="tvHorainicioHorario">Hora Inicio</string>
     <string name="tvHorafinHorario">Hora Fin</string>
     <string name="tvZonaHorario">Zona</string>
 
-    <!--Fragment Dialog Buscador-->
+    <!-- Fragment Dialog Buscador -->
     <string name="tituloBuscadorActividades">Buscar Actividades</string>
     <string name="tituloseparadorFiltros">Filtros</string>
     <string name="tvEdad">Edad</string>
@@ -49,6 +49,7 @@
     <string name="tvHora">Hora</string>
     <string name="btnAceptar">Aceptar</string>
     <string name="btnCancelar">Cancelar</string>
+
     <string-array name="diassemana">
         <item>Día</item>
         <item>Lunes</item>
@@ -60,20 +61,30 @@
         <item>Domingo</item>
     </string-array>
 
+    <!-- jrvm -->
 
-    <!--jrvm-->
 
-    <!--URLs-->
+    <!-- URLs -->
     <string name="base_url">http://192.168.0.103/mobile/club/</string>
     <string name="youtube_url">vnd.youtube://</string>
 
-    <!--para el dialog buscador-->
+    <!-- para el dialog buscador -->
     <string name="que_quieres">¿Qué quieres encontrar?</string>
 
-    <!--otras cadenas-->
+    <!-- para el buscador del calendario -->
+    <string-array name="opciones_buscador_calendario">
+        <item>hoy</item>
+        <item>en 7 días</item>
+        <item>en 30 días</item>
+        <item>en un año</item>
+    </string-array>
+
+    <!-- otras cadenas -->
     <string name="buscador">busca</string>
     <string name="buscador_hint">escribe aquí</string>
     <string name="no_hubo_resultados">No se encontraron resultados para esta búsqueda.</string>
     <string name="error">Ocurrió un error.</string>
+    <string name="title_activity_calendario_detalle">CalendarioDetalle</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

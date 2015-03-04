@@ -6,19 +6,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.clubes.imagencentral.clubes.Fragments.FragmentBuscador;
-import com.clubes.imagencentral.clubes.Fragments.FragmentClubMain;
+import com.clubes.imagencentral.clubes.Fragments.FragmentBuscadorCalendario;
 import com.clubes.imagencentral.clubes.Fragments.FragmentListadoCalendario;
 import com.clubes.imagencentral.clubes.Fragments.FragmentListadoNoticias;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
-public class MainActivity extends ActionBarActivity implements FragmentBuscador.interfazBuscador  {
+public class MainActivity extends ActionBarActivity implements FragmentBuscador.interfazBuscador,FragmentBuscadorCalendario.interfazBuscadorCalendario {
 
 
     // TODO poner una funcion que lea el club de la base de datos
@@ -59,7 +60,7 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
         @Override
@@ -70,7 +71,6 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
                 case 1: return "NOTICIAS";
                 case 2: return "CALENDARIO";
                 case 3: return "QUEJAS";
-                case 4: return "CLUB";
                 default: return "";
             }
 
@@ -165,22 +165,6 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
                     return fragmento;
 
                 }
-                case 4: {
-
-                    Fragment mainclub = new FragmentClubMain();
-                    // crear los argumentos para el contenido
-                    Bundle argumentos = new Bundle();
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(CLUB);
-                    String idClub = sb.toString();
-                    argumentos.putString("CLUB", idClub);
-                    argumentos.putString(contenido.ARG_SECTION_NAME,getPageTitle(i).toString());
-                    // pasarle los argumentos al nuevo fragmento
-                    mainclub.setArguments(argumentos);
-                    // devolver el fragmento creado
-                    return mainclub;
-
-                }
 
                 default:
                     return null;
@@ -191,12 +175,23 @@ public class MainActivity extends ActionBarActivity implements FragmentBuscador.
 
     }
     /***/
+
     /** sobreescribir el metodo de interfazBuscador **/
     public void traeCadena(String cadena) {
 
         PaginadorAdaptador adaptador=(PaginadorAdaptador) paginador.getAdapter();
         FragmentListadoNoticias listadoNoticias=(FragmentListadoNoticias) adaptador.getRegisteredFragment(paginador.getCurrentItem());
         listadoNoticias.actualizaNoticias(cadena);
+
+    }
+    /***/
+
+    /** sobreescribir el metodo de intefazBuscadorCalendario **/
+    public void traeParametrosCalendario(String cadena, int opcion) {
+
+        PaginadorAdaptador adaptador=(PaginadorAdaptador) paginador.getAdapter();
+        FragmentListadoCalendario listadoCalendario=(FragmentListadoCalendario) adaptador.getRegisteredFragment(paginador.getCurrentItem());
+        listadoCalendario.actualizaListadoCalendario(cadena, opcion);
 
     }
     /***/
