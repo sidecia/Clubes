@@ -3,11 +3,15 @@ package com.clubes.imagencentral.clubes.Fragments;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -91,6 +95,33 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
 
     public void traerMasEventos() {
         traerEventos(club, search, daysStep, rangeMax, page);
+    }
+    /***/
+
+
+    /** para el menu de la actionbar **/
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_listado_calendario, menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            // para el buscador
+            case R.id.boton_buscador_calendario: {
+
+                // mostrar el fragmento con el buscador
+                FragmentBuscadorCalendario buscador=new FragmentBuscadorCalendario();
+                buscador.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+                buscador.show(getActivity().getSupportFragmentManager(), "Buscador");
+                return true;
+            }
+            // caso default
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+
     }
     /***/
 
@@ -235,6 +266,17 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
             }
 
         }
+
+    }
+    /***/
+
+
+    /** para actualizar la informacion con los parametros recibidos del buscador **/
+    public void actualizaListadoCalendario(String cadena, int opcion) {
+
+        Log.i("info", "esto es lo que recibió el fragmento");
+        Log.i("cadena", cadena);
+        Log.i("opcion", Integer.toString(opcion));
 
     }
     /***/

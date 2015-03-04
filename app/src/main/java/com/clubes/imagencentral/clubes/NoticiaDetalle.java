@@ -22,8 +22,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tools.ImagenReal;
-import tools.Json;
+import com.clubes.imagencentral.clubes.tools.ImagenReal;
+import com.clubes.imagencentral.clubes.tools.Json;
 
 
 public class NoticiaDetalle extends ActionBarActivity {
