@@ -40,7 +40,7 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
     // inicializar las variables para la busqueda
     protected String club;
     protected String search="";         // busqueda vacia por default
-    protected String daysStep="";       // intervalo de dias para buscar
+    protected String daysStep="0";       // intervalo de dias para buscar
     protected String rangeMax="";       // los eventos que ocurren en el periodo de tiempo seleccionado (week, month o year)
     protected String page="1";          // traer la pagina 1 por default
     protected int umbral=0;             // controla cuantos items faltan para cargar mas items
@@ -171,6 +171,7 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
 
             // armar la url para la peticion
             String url=getActivity().getString(R.string.base_url)+"api/content/listEvents?club="+params[0];
+
             if(params[1]!=null && !params[1].equals("")) {
                 url+="&search="+params[1];
             }
@@ -206,6 +207,7 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
                         item.put("title", getString(R.string.no_hubo_resultados));
                         item.put("description", "");
                         item.put("photo", "1/sto54e77ec5c5266.jpg");
+                        item.put("hour", "");
                         item.put("begin", "");
                         item.put("end", "");
                         items.put(item);
@@ -219,6 +221,7 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
                     error.put("title", getString(R.string.error));
                     error.put("description", datos.getJSONObject("meta").getString("detail"));
                     error.put("photo", "1/sto54e77ec5c5266.jpg");
+                    error.put("hour", "");
                     error.put("begin", "");
                     error.put("end", "");
                     items.put(error);
@@ -235,6 +238,10 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
         }
 
         protected void onPostExecute(JSONArray items) {
+
+            /**/
+            Log.i("items", items.toString());
+            /**/
 
             // checar si se deben buscar mas items despues
             if(items.length()<NUMERO_ITEMS) {
@@ -274,9 +281,27 @@ public class FragmentListadoCalendario extends ListFragment implements AbsListVi
     /** para actualizar la informacion con los parametros recibidos del buscador **/
     public void actualizaListadoCalendario(String cadena, int opcion) {
 
-        Log.i("info", "esto es lo que recibió el fragmento");
-        Log.i("cadena", cadena);
-        Log.i("opcion", Integer.toString(opcion));
+        // reiniciar las variables de busqueda
+        search=cadena;
+        switch (opcion) {
+            case 0: default:
+                daysStep="0";
+                break;
+            case 1:
+                daysStep="7";
+                break;
+            case 2:
+                daysStep="30";
+                break;
+            case 3:
+                daysStep="365";
+                break;
+        }
+        page="1";
+        traerMas=true;
+
+        // traer los nuevos datos
+        traerEventos(club, search, daysStep, rangeMax, page);
 
     }
     /***/

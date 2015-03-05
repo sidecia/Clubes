@@ -3,7 +3,9 @@ package com.clubes.imagencentral.clubes;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class CalendarioDetalle extends ActionBarActivity {
@@ -32,6 +37,9 @@ public class CalendarioDetalle extends ActionBarActivity {
     private ImageLoader imageLoader=ImageLoader.getInstance();
     DisplayImageOptions opciones=new DisplayImageOptions.Builder().build();
     /***/
+
+    // referencia al boton de agendar calendario
+    ImageButton agendaCalendarioDetalle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +72,6 @@ public class CalendarioDetalle extends ActionBarActivity {
 
             // armar la url
             String url=getString(R.string.base_url)+"api/content/getEvent?club="+params[0]+"&eid="+params[1]+"";
-            /**/
-            Log.i("url", url);
-            /**/
 
             // traer los datos de la API como JSONObject
             Json json=new Json();
@@ -107,7 +112,17 @@ public class CalendarioDetalle extends ActionBarActivity {
         // enviar los datos a la vista principal
         protected void onPostExecute(JSONObject detalle) {
 
+            final Calendar horaEvento=Calendar.getInstance();
+            final String tituloEvento;
+            final String descripcionEvento;
+
+            SimpleDateFormat formato=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
             try {
+
+                // inicializar los datos para agendar el evento
+                tituloEvento=detalle.getString("title");
+                descripcionEvento=detalle.getString("description");
 
                 // poner la informacion en la vista
                 TextView tituloCalendarioDetalle=(TextView) findViewById(R.id.titulo_calendario_detalle);
@@ -116,13 +131,16 @@ public class CalendarioDetalle extends ActionBarActivity {
                 descripcionCalendarioDetalle.setText(detalle.getString("description"));
                 TextView fechaCalendarioDetalle=(TextView) findViewById(R.id.fecha_calendario_detalle);
                 if(detalle.has("date")) {
+                    horaEvento.setTime(formato.parse(detalle.getString("date")+" "+detalle.getString("hour"))); //fecha para la agenda
                     fechaCalendarioDetalle.setText(detalle.getString("date"));
                 } else {
+                    horaEvento.setTime(formato.parse(detalle.getString("begin")+" "+detalle.getString("hour"))); //fecha para la agenda
                     String date="del "+detalle.getString("begin")+ " al "+detalle.getString("end");
                     fechaCalendarioDetalle.setText(date);
                 }
                 TextView horaCalendarioDetalle=(TextView) findViewById(R.id.hora_calendario_detalle);
                 horaCalendarioDetalle.setText(detalle.getString("hour"));
+
 
                 // poner la imagen
                 ImageView imagenCalendarioDetalle=(ImageView) findViewById(R.id.imagen_detalle_calendario);
@@ -188,9 +206,37 @@ public class CalendarioDetalle extends ActionBarActivity {
                     videoCalendarioDetalle.setVisibility(View.GONE);
                 }
 
+                /** listener para el boton de agendar eventos **/
+                agendaCalendarioDetalle=(ImageButton) findViewById(R.id.agenda_calendario_detalle);
+                agendaCalendarioDetalle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Build.VERSION.SDK_INT>=14) {
+                            Intent intent = new Intent(Intent.ACTION_INSERT)
+                                    .setData(CalendarContract.Events.CONTENT_URI)
+                                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, horaEvento.getTimeInMillis())
+                                    .putExtra(CalendarContract.Events.TITLE, tituloEvento)
+                                    .putExtra(CalendarContract.Events.DESCRIPTION, descripcionEvento)
+                                    .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_EDIT);
+                            intent.setType("vnd.android.cursor.item/event");
+                            intent.putExtra("beginTime", horaEvento.getTimeInMillis());
+                            intent.putExtra("endTime", horaEvento.getTimeInMillis()+60*60*1000);
+                            intent.putExtra("title", tituloEvento);
+                            startActivity(intent);
+                        }
+                    }
+                });
+                /***/
+
             } catch (JSONException e) {
                 // TODO en caso de que falle el json
                 e.printStackTrace();
+            } catch (ParseException p) {
+                // TODO en caso de que falle el parsing
+                p.printStackTrace();
             }
 
         }
