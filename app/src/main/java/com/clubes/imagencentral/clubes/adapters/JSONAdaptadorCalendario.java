@@ -1,6 +1,7 @@
 package com.clubes.imagencentral.clubes.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -106,6 +107,9 @@ public class JSONAdaptadorCalendario extends BaseAdapter implements ListAdapter 
 
             // atrapar el item
             JSONObject item=getItem(position);
+
+            // cambiar el color de los items que ya no están vigentes
+            convertView.setBackgroundColor((item.get("current").equals(true)? Color.WHITE:Color.LTGRAY));
 
             // poner los datos en el viewHolder
             viewHolder.fechaItemCalendario.setText(item.getString("begin"));

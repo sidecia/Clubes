@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -112,10 +111,10 @@ public class CalendarioDetalle extends ActionBarActivity {
         // enviar los datos a la vista principal
         protected void onPostExecute(JSONObject detalle) {
 
+            // variables para agendar el evento
             final Calendar horaEvento=Calendar.getInstance();
             final String tituloEvento;
             final String descripcionEvento;
-
             SimpleDateFormat formato=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
             try {
