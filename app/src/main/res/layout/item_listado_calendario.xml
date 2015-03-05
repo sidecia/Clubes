@@ -37,7 +37,8 @@
             android:id="@+id/imagen_item_calendario"
             android:layout_width="120dp"
             android:scaleType="centerCrop"
-            android:layout_height="100dip" />
+            android:layout_height="100dip"
+            android:src="@drawable/noencontre" />
 
         <LinearLayout
             android:orientation="vertical"
